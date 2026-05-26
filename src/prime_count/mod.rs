@@ -99,7 +99,7 @@ impl PhiTable {
     }
 }
 
-fn isqrt(n: u64) -> u64 {
+pub(crate) fn isqrt(n: u64) -> u64 {
     iroot(n, 2)
 }
 

@@ -4,7 +4,7 @@ use std::time::Instant;
 
 mod prime_count;
 
-use prime_count::{DefaultCounter, PrimeCounter};
+use prime_count::{DefaultCounter, PrimeCounter, isqrt};
 
 const DEFAULT_TARGET: u64 = 1_000_000_000;
 const DEFAULT_LOOKUP_LIMIT: usize = 10_000_000;
@@ -140,7 +140,7 @@ fn nth_prime<C: PrimeCounter + ?Sized>(target: u64, counter: &mut C) -> NthPrime
     }
 
     let estimate = inverse_logarithmic_integral(target);
-    let mut step = (estimate / 100_000).max(1024);
+    let mut step = isqrt(estimate).saturating_mul(2).max(1024);
     let (lower, upper) = if counter.pi(estimate) < target {
         let lower = estimate;
         let mut upper = estimate.saturating_add(step).max(3);
