@@ -4,7 +4,7 @@ use std::time::Instant;
 
 mod prime_count;
 
-use prime_count::{LehmerCounter, PrimeCounter};
+use prime_count::{DefaultCounter, PrimeCounter};
 
 const DEFAULT_TARGET: u64 = 1_000_000_000;
 const DEFAULT_LOOKUP_LIMIT: usize = 10_000_000;
@@ -16,7 +16,7 @@ fn main() {
     });
 
     let started = Instant::now();
-    let mut counter = LehmerCounter::new(DEFAULT_LOOKUP_LIMIT);
+    let mut counter = DefaultCounter::new(DEFAULT_LOOKUP_LIMIT);
 
     match command {
         Command::Count(x) => {
@@ -268,7 +268,7 @@ mod tests {
 
     #[test]
     fn finds_known_nth_primes() {
-        let mut counter = LehmerCounter::new(10_000);
+        let mut counter = DefaultCounter::new(10_000);
 
         assert_eq!(nth_prime(1, &mut counter).prime, 2);
         assert_eq!(nth_prime(25, &mut counter).prime, 97);
